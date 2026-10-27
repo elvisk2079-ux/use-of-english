@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Go, Come, Reach, Get</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: one reading column — mastery board of the 20 phrases, then five drills in a fixed ladder */
+:root {
+  --paper: #F1F4F0; --card: #FFFFFF; --ink: #1B2733; --muted: #5B6977; --line: #D6DCD5;
+  --accent: #2A55C9; --accent-soft: #E4EBFB; --on-accent: #FFFFFF;
+  --ok: #1D8455; --ok-soft: #DCF1E5; --bad: #BF3F2D; --bad-soft: #F8E2DD;
+  --mark: #FFE892; --mark-ink: #4A3C00; --dot: #CBD3CC;
+  --font-display: "Young Serif", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11171D; --card: #19212A; --ink: #E4EAF0; --muted: #9AA7B4; --line: #2B3642;
+    --accent: #8AA8FF; --accent-soft: #1F2C4A; --on-accent: #0E1730;
+    --ok: #62D39F; --ok-soft: #163327; --bad: #FF8E7C; --bad-soft: #3B201B;
+    --mark: #5B4C14; --mark-ink: #FFF1BF; --dot: #34404C; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11171D; --card: #19212A; --ink: #E4EAF0; --muted: #9AA7B4; --line: #2B3642;
+  --accent: #8AA8FF; --accent-soft: #1F2C4A; --on-accent: #0E1730;
+  --ok: #62D39F; --ok-soft: #163327; --bad: #FF8E7C; --bad-soft: #3B201B;
+  --mark: #5B4C14; --mark-ink: #FFF1BF; --dot: #34404C; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.55; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+.hero { padding-block: 40px 16px; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(32px, 6vw, 46px); line-height: 1.1; margin: 0 0 12px; text-wrap: balance; }
+.sub { margin: 0; color: var(--muted); max-width: 60ch; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--paper); border-bottom: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-direction: column; gap: 8px; padding-block: 10px; }
+.nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { flex: none; text-decoration: none; color: var(--ink); font-size: 14px; font-weight: 600; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); }
+.nav a:hover { border-color: var(--accent); color: var(--accent); }
+.progress { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.track { flex: 1; height: 6px; background: var(--line); border-radius: 999px; overflow: hidden; }
+.fill { height: 100%; width: 0; background: var(--ok); transition: width .4s ease; }
+.progress b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+main { padding-block: 8px 64px; }
+section { padding-top: 26px; scroll-margin-top: 110px; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: 26px; line-height: 1.2; margin: 0 0 4px; }
+.lead { margin: 0 0 14px; color: var(--muted); }
+
+/* Mastery board */
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 6px; }
+.chip { min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; display: flex; flex-direction: column; gap: 4px; }
+.chip .ph { font-weight: 600; font-size: 15px; line-height: 1.3; }
+.chip .ru { font-size: 12.5px; color: var(--muted); line-height: 1.3; }
+.dots { display: flex; gap: 3px; }
+.dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--dot); }
+.dots i.on { background: var(--ok); }
+.chip.weak { border-color: var(--bad); }
+.chip.master { border-color: var(--ok); background: var(--ok-soft); }
+.board-foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+/* Exercise card */
+.ex { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 16px; }
+.ex-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+h3 { margin: 0; font-size: 18px; font-weight: 700; }
+h3 .num { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin-right: 8px; }
+.score { flex: none; font-family: var(--font-mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); }
+.score.done { color: var(--ok); border-color: var(--ok); background: var(--ok-soft); }
+.instr { margin: 6px 0 14px; color: var(--muted); font-size: 15px; }
+ol.items { margin: 0; padding-left: 1.6em; display: flex; flex-direction: column; gap: 10px; }
+ol.items li { line-height: 2; padding-left: 4px; }
+ol.items li::marker { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+
+.choice { display: inline-flex; flex-wrap: wrap; gap: 4px; vertical-align: baseline; }
+.opt { font: inherit; font-size: 16px; line-height: 1.4; color: var(--ink); cursor: pointer; background: var(--card); border: 1.5px solid var(--line); border-radius: 999px; padding: 1px 11px; text-align: left; }
+.opt:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.opt.ok { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); font-weight: 600; cursor: default; }
+.opt.bad { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); text-decoration: line-through; cursor: default; }
+.opt.dim { opacity: .4; cursor: default; }
+.shake { animation: shake .3s; }
+@keyframes shake { 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+
+/* MCQ */
+.q { margin: 0 0 6px; line-height: 1.5; }
+.mcq { display: flex; flex-wrap: wrap; gap: 6px; }
+.mcq .opt { border-radius: 8px; padding: 4px 12px; }
+
+/* Right or wrong */
+.tf-line { line-height: 1.5; margin: 0 0 6px; }
+.tf-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.fix { margin: 6px 0 0; font-size: 15px; line-height: 1.5; }
+.fix.ok { color: var(--ok); }
+.fix.bad { color: var(--bad); }
+.fix b { color: var(--ink); }
+
+.gap { font: inherit; font-size: 16px; color: var(--ink); background: var(--accent-soft); border: none; border-bottom: 2px dashed var(--accent); border-radius: 4px 4px 0 0; padding: 1px 6px; max-width: 100%; }
+.gap:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+.gap.ok { background: var(--ok-soft); border-bottom: 2px solid var(--ok); }
+.gap.bad { background: var(--bad-soft); border-bottom: 2px solid var(--bad); }
+.gap.shown { background: var(--mark); color: var(--mark-ink); border-bottom: 2px solid var(--mark-ink); }
+
+/* Translate */
+.tr li { line-height: 1.5 !important; }
+.tr .ru-line { margin: 0 0 6px; font-weight: 500; }
+.tr textarea { width: 100%; font: inherit; font-size: 16px; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; resize: vertical; min-height: 44px; }
+.tr textarea:focus { outline: 2px solid var(--accent); outline-offset: 0; }
+.tr textarea.ok { border-color: var(--ok); background: var(--ok-soft); }
+.tr textarea.bad { border-color: var(--bad); background: var(--bad-soft); }
+.tr .line { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; align-items: center; }
+.model { margin: 8px 0 2px; font-size: 15px; color: var(--muted); }
+.model b { color: var(--ink); }
+
+.foot { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.btn { font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; padding: 7px 14px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.btn.primary:hover { filter: brightness(1.08); color: var(--on-accent); }
+.btn.small { font-size: 13px; padding: 4px 10px; }
+.btn:focus-visible, .opt:focus-visible, .nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.note { margin: 14px 0 0; padding: 10px 12px; border-radius: 8px; font-size: 15px; background: var(--accent-soft); }
+
+@media (max-width: 480px) { body { font-size: 16px; } .ex { padding: 14px; } ol.items { padding-left: 1.3em; } }
+@media (prefers-reduced-motion: reduce) { .shake { animation: none; } .fill { transition: none; } html { scroll-behavior: auto; } }
+/* flashcards */
+.fc-tools { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.btn.ghost { background: transparent; border: 1px solid var(--line); color: inherit; }
+.flip { perspective: 1200px; cursor: pointer; outline: none; margin: 0 auto; max-width: 560px; }
+.flip-in { position: relative; min-height: 220px; transition: transform .45s; transform-style: preserve-3d; }
+.flip.on .flip-in { transform: rotateY(180deg); }
+.flip:focus-visible .flip-in { box-shadow: 0 0 0 3px var(--accent-soft); border-radius: 14px; }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 22px 18px 30px; border: 1px solid var(--line); border-radius: 14px; background: var(--card); color: var(--ink); text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.face.back { transform: rotateY(180deg); background: var(--accent-soft); }
+.fc-word { font-size: clamp(22px, 5vw, 30px); font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
+.fc-ru { font-size: clamp(19px, 4.4vw, 25px); font-weight: 600; line-height: 1.3; }
+.fc-def { font-size: 14px; opacity: .75; max-width: 42ch; }
+.fc-hint { position: absolute; bottom: 8px; font-size: 12px; opacity: .45; }
+.speak { font-size: 22px; line-height: 1; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+.fc-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin: 12px 0 6px; }
+.fc-nav .btn { font-size: 20px; padding: 4px 16px; }
+.fc-count { font-variant-numeric: tabular-nums; min-width: 5ch; text-align: center; }
+.fc-rate { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+.btn.again { background: transparent; border: 1px solid #d9822b; color: #d9822b; }
+.btn.know { background: #2e9e5b; border: 1px solid #2e9e5b; color: #fff; }
+.fc-done { text-align: center; }
+.fc-done p { font-weight: 600; margin: 8px 0 10px; }
+.btn.know:hover { color: #fff; filter: brightness(1.08); border-color: #2e9e5b; }
+.btn.again:hover { color: #d9822b; border-color: #d9822b; background: rgba(217,130,43,.08); }
+</style>
+
+<header class="hero wrap">
+  <p class="eyebrow">Use of English B2 · Unit 1 · Collocations A</p>
+  <h1>Go, Come, Reach, Get</h1>
+  <p class="sub">Twenty collocations: flashcards and five drills. Every correct answer adds a dot to the phrase. Five dots means you know it by heart. Red frames show the phrases to repeat.</p>
+</header>
+
+<div class="bar">
+  <div class="wrap">
+    <nav class="nav" id="nav" aria-label="Drills"></nav>
+    <div class="progress" aria-live="polite">
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <span><b id="mastered">0</b> / <b>20</b> phrases learned</span>
+    </div>
+  </div>
+</div>
+
+<main class="wrap" id="main">
+  <section id="board-sec">
+    <h2>Your phrases</h2>
+    <p class="lead">Five dots = learned.</p>
+    <div class="board" id="board"></div>
+    <div class="board-foot">
+      <span>Progress is saved in this browser.</span>
+      <button class="btn small" type="button" id="reset-all">Reset my progress</button>
+    </div>
+  </section>
+</main>
+
+<script>
+const P = [
+  { id: "better", v: ["get"], rest: "better", key: "better", en: "improve; recover after an illness", ru: "улучшаться, поправляться" },
+  { id: "decision", v: ["reach"], rest: "a decision", key: "decision", en: "decide after thinking or discussing", ru: "принять решение" },
+  { id: "terms", v: ["come"], rest: "to terms with", key: "terms", en: "slowly accept something sad or difficult", ru: "смириться с" },
+  { id: "trouble", v: ["get"], rest: "into trouble", key: "trouble", en: "end up in a situation where you are punished or have problems", ru: "попасть в неприятности" },
+  { id: "dark", v: ["get"], rest: "dark", key: "dark", en: "become dark in the evening", ru: "темнеть" },
+  { id: "sleep", v: ["go", "get"], rest: "to sleep", key: "sleep", en: "fall asleep", ru: "заснуть" },
+  { id: "rid", v: ["get"], rest: "rid of", key: "rid", en: "throw away or remove something you don't want", ru: "избавиться от" },
+  { id: "ready", v: ["get"], rest: "ready", key: "ready", en: "prepare yourself", ru: "собираться, готовиться" },
+  { id: "sack", v: ["get"], rest: "the sack", key: "sack", en: "lose your job because your employer dismisses you", ru: "быть уволенным" },
+  { id: "handy", v: ["come"], rest: "in handy", key: "handy", en: "be useful when you need it", ru: "пригодиться" },
+  { id: "revenge", v: ["get"], rest: "revenge", key: "revenge", en: "hurt someone because they hurt you", ru: "отомстить" },
+  { id: "red", v: ["go"], rest: "red", key: "red", en: "blush because you are embarrassed", ru: "покраснеть" },
+  { id: "agreement", v: ["reach"], rest: "an agreement", key: "agreement", en: "agree after a long discussion", ru: "прийти к соглашению" },
+  { id: "lost", v: ["get"], rest: "lost", key: "lost", en: "not know where you are", ru: "заблудиться" },
+  { id: "job", v: ["get"], rest: "the job", key: "job", en: "be chosen for a job you applied for", ru: "получить работу" },
+  { id: "nerves", v: ["get"], rest: "on sb's nerves", key: "nerves", en: "annoy someone", ru: "действовать на нервы" },
+  { id: "back", v: ["get"], rest: "off sb's back", key: "back", en: "stop criticising or bothering someone", ru: "отстать от кого-то" },
+  { id: "business", v: ["get"], rest: "down to business", key: "business", en: "start the serious work", ru: "перейти к делу" },
+  { id: "top", v: ["go"], rest: "over the top", key: "top", en: "do or say too much; exaggerate", ru: "перегнуть палку, переборщить" },
+  { id: "even", v: ["get"], rest: "even with", key: "even", en: "punish someone who did something bad to you", ru: "поквитаться с" }
+];
+const VERBS = ["go", "come", "reach", "get"];
+const full = p => `${p.v.join(" / ")} ${p.rest}`;
+const byId = Object.fromEntries(P.map(p => [p.id, p]));
+
+/* ---------- Drill content ---------- */
+const RW = [
+  { id: "lost", t: "I went lost in the old part of the city.", ok: false, fix: "I got lost in the old part of the city." },
+  { id: "dark", t: "It's getting dark, so let's go inside.", ok: true },
+  { id: "decision", t: "After a long discussion, we finally reached a decision.", ok: true },
+  { id: "handy", t: "Keep this old bag – it might get in handy.", ok: false, fix: "It might come in handy." },
+  { id: "sack", t: "He reached the sack for being rude to customers.", ok: false, fix: "He got the sack for being rude to customers." },
+  { id: "red", t: "She went red when he smiled at her.", ok: true },
+  { id: "agreement", t: "The two companies got an agreement after months of talks.", ok: false, fix: "The two companies reached an agreement." },
+  { id: "nerves", t: "Please stop! You're going on my nerves.", ok: false, fix: "You're getting on my nerves." },
+  { id: "rid", t: "It's time to get rid of these old shoes.", ok: true },
+  { id: "terms", t: "I can't come to terms with the fact that summer is over.", ok: true },
+  { id: "business", t: "Everyone is here, so let's go down to business.", ok: false, fix: "Let's get down to business." },
+  { id: "top", t: "Three cakes for two people? You came over the top!", ok: false, fix: "You went over the top!" },
+  { id: "trouble", t: "If you skip school, you'll get into trouble.", ok: true },
+  { id: "even", t: "He wants to reach even with his brother for breaking his phone.", ok: false, fix: "He wants to get even with his brother." },
+  { id: "job", t: "Guess what? I got the job!", ok: true },
+  { id: "ready", t: "Come on, go ready – the bus leaves in five minutes!", ok: false, fix: "Get ready – the bus leaves in five minutes!" }
+];
+
+const TYPE = [
+  { id: "better", t: "Grandma has been ill, but she is [[getting]] better now." },
+  { id: "decision", t: "We haven't [[reached]] a decision about the holiday yet." },
+  { id: "terms", t: "He has never really [[come]] to terms with losing the final." },
+  { id: "trouble", t: "Tom [[got]] into trouble yesterday for using his phone in class." },
+  { id: "dark", t: "In winter it [[gets]] dark at four o'clock." },
+  { id: "sleep", t: "I couldn't [[get/go]] to sleep because of the noise next door." },
+  { id: "rid", t: "Have you [[got/gotten]] rid of that old sofa yet?" },
+  { id: "ready", t: "She was still [[getting]] ready when her friends arrived." },
+  { id: "sack", t: "If you keep arguing with customers, you'll [[get]] the sack." },
+  { id: "handy", t: "That torch [[came]] in handy when the lights went out last night." },
+  { id: "revenge", t: "In the end, he [[got]] his revenge by beating his rival in the final." },
+  { id: "red", t: "Whenever someone pays her a compliment, she [[goes]] red." },
+  { id: "agreement", t: "The workers and the company have finally [[reached]] an agreement on pay." },
+  { id: "lost", t: "Take a map so you don't [[get]] lost." },
+  { id: "job", t: "Did you [[get]] the job you applied for?" },
+  { id: "nerves", t: "Turn that music down – it's [[getting]] on my nerves!" },
+  { id: "back", t: "My mum won't [[get]] off my back about tidying my room." },
+  { id: "business", t: "After a quick coffee, we [[got]] down to business." },
+  { id: "top", t: "The decorations were lovely, but the fireworks [[went]] a bit over the top." },
+  { id: "even", t: "Don't worry, I'll [[get]] even with him one day." }
+];
+
+const TR = [
+  { id: "better", ru: "Скорее поправляйся!", en: "Get better soon!", key: "get better" },
+  { id: "decision", ru: "Комитет наконец принял решение.", en: "The committee finally reached a decision.", key: "reach(ed|es)? a decision|c[ao]me to a decision" },
+  { id: "terms", ru: "Она не может смириться с переездом.", en: "She can't come to terms with the move.", key: "c[ao]m(e|es|ing) to terms with" },
+  { id: "trouble", ru: "Смотри не попади в неприятности!", en: "Don't get into trouble!", key: "g(e|o)t(s|ting)? into trouble" },
+  { id: "dark", ru: "Зимой рано темнеет.", en: "In winter it gets dark early.", key: "get(s|ting)? dark" },
+  { id: "sleep", ru: "Я не мог заснуть всю ночь.", en: "I couldn't get to sleep all night.", key: "(get|go|got|went) to sleep" },
+  { id: "rid", ru: "Давай избавимся от этого старого телевизора.", en: "Let's get rid of this old TV.", key: "g(e|o)t(ten)? rid of" },
+  { id: "ready", ru: "Собирайся, мы опаздываем!", en: "Get ready, we're late!", key: "get(ting)? ready" },
+  { id: "sack", ru: "Его уволили в прошлом месяце.", en: "He got the sack last month.", key: "got the sack" },
+  { id: "handy", ru: "Эта коробка ещё пригодится.", en: "This box will come in handy.", key: "c[ao]me(s)? in handy" },
+  { id: "revenge", ru: "Он хочет отомстить.", en: "He wants to get revenge.", key: "get (his |her |my |your |their |our )?revenge" },
+  { id: "red", ru: "Когда учитель похвалил его, он покраснел.", en: "When the teacher praised him, he went red.", key: "went red" },
+  { id: "agreement", ru: "Мы так и не договорились.", en: "We didn't reach an agreement.", key: "reach(ed)? an agreement|c[ao]me to an agreement" },
+  { id: "lost", ru: "Мы заблудились в лесу.", en: "We got lost in the forest.", key: "got lost" },
+  { id: "job", ru: "Она получила работу!", en: "She got the job!", key: "got the job" },
+  { id: "nerves", ru: "Ты действуешь мне на нервы!", en: "You're getting on my nerves!", key: "get(ting|s)? on (my|his|her|your|our|their) nerves" },
+  { id: "back", ru: "Отстань от меня!", en: "Get off my back!", key: "get off (my|his|her|your|our|their) back" },
+  { id: "business", ru: "Давайте перейдём к делу.", en: "Let's get down to business.", key: "get down to business" },
+  { id: "top", ru: "Сто шариков на детский праздник? Ты переборщил!", en: "A hundred balloons for a kids' party? You've gone over the top!", key: "(go|gone|went|going) over the top" },
+  { id: "even", ru: "Я ещё с ним поквитаюсь.", en: "I'll get even with him.", key: "get even with" }
+];
+
+/* ---------- State ---------- */
+const LS = "uoe-b2-u1-colA";
+let M = {};
+try { M = JSON.parse(localStorage.getItem(LS) || "{}") || {}; } catch (e) { M = {}; }
+const save = () => { try { localStorage.setItem(LS, JSON.stringify(M)); } catch (e) {} };
+function hit(id, ok) {
+  if (!id) return;
+  const r = M[id] || (M[id] = { c: 0, m: 0 });
+  if (ok) r.c++; else r.m++;
+  save(); renderBoard();
+}
+
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const norm = s => (s || "").toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, " ").trim().replace(/[.!?,;:]+$/, "");
+
+function renderBoard() {
+  const b = document.getElementById("board");
+  b.innerHTML = "";
+  let learned = 0;
+  P.forEach(p => {
+    const r = M[p.id] || { c: 0, m: 0 };
+    const n = Math.min(5, r.c);
+    if (n >= 5) learned++;
+    const chip = el("div", "chip" + (n >= 5 ? " master" : r.m > r.c ? " weak" : ""));
+    chip.append(el("span", "ph", full(p)), el("span", "ru", p.ru));
+    const dots = el("span", "dots");
+    dots.setAttribute("aria-label", `${n} of 5`);
+    for (let i = 0; i < 5; i++) dots.append(el("i", i < n ? "on" : ""));
+    chip.append(dots);
+    b.append(chip);
+  });
+  document.getElementById("mastered").textContent = learned;
+  document.getElementById("fill").style.width = `${(learned / P.length) * 100}%`;
+}
+
+/* ---------- Drills ---------- */
+const DRILLS = [];
+function card(num, title, instr, short) {
+  num += 1;
+  const sec = el("section");
+  sec.id = `d${num}`;
+  const ex = el("article", "ex");
+  const head = el("div", "ex-head");
+  const h3 = el("h3");
+  h3.append(el("span", "num", `Drill ${num}`), title);
+  const score = el("span", "score");
+  head.append(h3, score);
+  ex.append(head, el("p", "instr", instr));
+  const body = el("div");
+  ex.append(body);
+  const foot = el("div", "foot");
+  ex.append(foot);
+  sec.append(ex);
+  document.getElementById("main").append(sec);
+  const a = el("a", null, `${num} · ${short}`);
+  a.href = `#d${num}`;
+  document.getElementById("nav").append(a);
+  const d = { body, foot, score, ex, total: 0, ok: 0 };
+  DRILLS.push(d);
+  return d;
+}
+function setScore(d) {
+  d.score.textContent = `${d.ok} / ${d.total}`;
+  d.score.classList.toggle("done", d.total > 0 && d.ok === d.total);
+}
+function resetBtn(d, build) {
+  const r = el("button", "btn", "Start again");
+  r.type = "button";
+  r.addEventListener("click", () => { d.body.innerHTML = ""; d.foot.innerHTML = ""; build(); });
+  d.foot.append(r);
+}
+
+/* Option buttons: immediate feedback, first click on the right one locks the item */
+function options(list, correctSet, id, d, onDone) {
+  const wrap = el("span", "choice");
+  let done = false;
+  list.forEach(o => {
+    const b = el("button", "opt", o);
+    b.type = "button";
+    b.addEventListener("click", () => {
+      if (done || b.disabled) return;
+      if (correctSet.includes(o)) {
+        done = true;
+        b.classList.add("ok");
+        wrap.querySelectorAll(".opt").forEach(x => { if (x !== b) { x.classList.add("dim"); x.disabled = true; } });
+        d.ok++; setScore(d); hit(id, true);
+        if (onDone) onDone();
+      } else {
+        b.classList.add("bad", "shake");
+        b.disabled = true;
+        hit(id, false);
+      }
+    });
+    wrap.append(b);
+  });
+  return wrap;
+}
+
+/* Drill 1 — Which verb? */
+function drill1() {
+  const d = card(1, "Which verb?", "Tap the verb that goes with each phrase. One phrase takes two verbs.", "Which verb");
+  const build = () => {
+    d.ok = 0; d.total = P.length; setScore(d);
+    const ol = el("ol", "items");
+    shuffle(P).forEach(p => {
+      const li = el("li");
+      li.append(options(VERBS, p.v, p.id, d, null), " " + p.rest);
+      ol.append(li);
+    });
+    d.body.append(ol);
+    resetBtn(d, build);
+  };
+  build();
+}
+
+/* Drill 2 — What does it mean? */
+function drill2() {
+  const d = card(2, "What does it mean?", "Read the meaning and tap the phrase that matches it.", "Meaning");
+  const build = () => {
+    d.ok = 0; d.total = P.length; setScore(d);
+    const ol = el("ol", "items");
+    shuffle(P).forEach(p => {
+      const li = el("li");
+      li.append(el("p", "q", p.en));
+      const others = shuffle(P.filter(x => x.id !== p.id)).slice(0, 3);
+      const opts = shuffle([p, ...others]).map(full);
+      const box = el("div", "mcq");
+      box.append(options(opts, [full(p)], p.id, d, null));
+      li.append(box);
+      ol.append(li);
+    });
+    d.body.append(ol);
+    resetBtn(d, build);
+  };
+  build();
+}
+
+/* Drill 3 — Right or wrong? */
+function drill3() {
+  const d = card(3, "Right or wrong?", "Is the collocation in each sentence correct? Wrong ones show the correct version.", "Right or wrong");
+  const build = () => {
+    d.ok = 0; d.total = RW.length; setScore(d);
+    const ol = el("ol", "items");
+    shuffle(RW).forEach(it => {
+      const li = el("li");
+      li.append(el("p", "tf-line", it.t));
+      const btns = el("div", "tf-btns");
+      const fb = el("p", "fix");
+      fb.hidden = true;
+      let done = false;
+      [["Right", true], ["Wrong", false]].forEach(([label, val]) => {
+        const b = el("button", "opt", label);
+        b.type = "button";
+        b.addEventListener("click", () => {
+          if (done) return;
+          done = true;
+          const correct = val === it.ok;
+          b.classList.add(correct ? "ok" : "bad");
+          btns.querySelectorAll(".opt").forEach(x => { if (x !== b) { x.classList.add("dim"); x.disabled = true; } });
+          fb.hidden = false;
+          fb.className = "fix " + (correct ? "ok" : "bad");
+          fb.innerHTML = "";
+          if (it.ok) fb.append(correct ? "Yes, that's correct." : "It was correct.");
+          else { fb.append(correct ? "Yes! Correct version: " : "It was wrong. Correct version: "); fb.append(el("b", null, it.fix)); }
+          if (correct) { d.ok++; setScore(d); }
+          hit(it.id, correct);
+        });
+        btns.append(b);
+      });
+      li.append(btns, fb);
+      ol.append(li);
+    });
+    d.body.append(ol);
+    resetBtn(d, build);
+  };
+  build();
+}
+
+/* Drill 4 — Type the verb */
+function drill4() {
+  const d = card(4, "Type the verb", "Write go, come, reach or get in the correct form. Watch the tense! Press Enter or Check.", "Type the verb");
+  const build = () => {
+    d.ok = 0; d.total = TYPE.length; setScore(d);
+    const gaps = [];
+    const ol = el("ol", "items");
+    TYPE.forEach((it, i) => {
+      const li = el("li");
+      const m = it.t.match(/^(.*)\[\[(.+?)\]\](.*)$/);
+      const answers = m[2].split("/");
+      const inp = el("input", "gap");
+      inp.type = "text"; inp.id = `d4-${i}`; inp.autocomplete = "off"; inp.spellcheck = false;
+      inp.setAttribute("autocapitalize", "off"); inp.setAttribute("aria-label", "gap");
+      inp.style.width = "8ch";
+      const g = { inp, answers: answers.map(norm), show: answers[0], id: it.id, ok: false, tried: false };
+      gaps.push(g);
+      inp.addEventListener("input", () => inp.classList.remove("ok", "bad", "shown"));
+      inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); check(); } });
+      li.append(m[1], inp, m[3]);
+      ol.append(li);
+    });
+    const check = () => {
+      gaps.forEach(g => {
+        if (g.ok) return;
+        const v = norm(g.inp.value);
+        if (!v) return;
+        g.inp.classList.remove("ok", "bad", "shown");
+        if (g.answers.includes(v)) { g.ok = true; g.inp.classList.add("ok"); g.inp.readOnly = true; hit(g.id, true); }
+        else { g.inp.classList.add("bad"); hit(g.id, false); }
+      });
+      d.ok = gaps.filter(g => g.ok).length; setScore(d);
+    };
+    d.body.append(ol);
+    const c = el("button", "btn primary", "Check"); c.type = "button"; c.addEventListener("click", check);
+    const s = el("button", "btn", "Show answers"); s.type = "button";
+    s.addEventListener("click", () => gaps.forEach(g => { if (!g.ok) { g.inp.value = g.show; g.inp.classList.remove("bad"); g.inp.classList.add("shown"); } }));
+    d.foot.append(c, s);
+    resetBtn(d, build);
+  };
+  build();
+}
+
+/* Drill 5 — Say it in English */
+function drill5() {
+  const d = card(5, "Say it in English", "Say the sentence aloud, then type it. The check looks for the collocation; the rest of your sentence can differ from the model.", "Translate");
+  const build = () => {
+    d.ok = 0; d.total = TR.length; setScore(d);
+    const ol = el("ol", "items tr");
+    shuffle(TR).forEach((it, i) => {
+      const li = el("li");
+      li.append(el("p", "ru-line", it.ru));
+      const ta = el("textarea");
+      ta.id = `d5-${i}`; ta.rows = 1; ta.placeholder = "Type in English…"; ta.setAttribute("aria-label", "Your translation");
+      const line = el("div", "line");
+      const c = el("button", "btn small primary", "Check"); c.type = "button";
+      const sh = el("button", "btn small", "Show model"); sh.type = "button";
+      const model = el("p", "model"); model.hidden = true;
+      let solved = false;
+      const re = new RegExp(`\\b(${it.key})\\b`, "i");
+      const check = () => {
+        if (solved || !ta.value.trim()) return;
+        const v = norm(ta.value).replace(/'/g, "'");
+        ta.classList.remove("ok", "bad");
+        model.hidden = false; model.innerHTML = "";
+        if (re.test(v)) {
+          solved = true; ta.classList.add("ok"); ta.readOnly = true;
+          model.append("Collocation correct. Model: "); model.append(el("b", null, it.en));
+          d.ok++; setScore(d); hit(it.id, true);
+        } else {
+          ta.classList.add("bad");
+          model.append("Use the collocation "); model.append(el("b", null, full(byId[it.id]))); model.append(". Try again.");
+          hit(it.id, false);
+        }
+      };
+      c.addEventListener("click", check);
+      ta.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); check(); } });
+      sh.addEventListener("click", () => { model.hidden = false; model.innerHTML = ""; model.append("Model: "); model.append(el("b", null, it.en)); });
+      line.append(c, sh);
+      li.append(ta, line, model);
+      ol.append(li);
+    });
+    d.body.append(ol);
+    resetBtn(d, build);
+  };
+  build();
+}
+
+document.getElementById("reset-all").addEventListener("click", e => {
+  const b = e.currentTarget;
+  if (b.dataset.armed) { M = {}; save(); renderBoard(); b.textContent = "Reset my progress"; delete b.dataset.armed; }
+  else { b.dataset.armed = "1"; b.textContent = "Tap again to reset"; setTimeout(() => { if (b.dataset.armed) { delete b.dataset.armed; b.textContent = "Reset my progress"; } }, 3000); }
+});
+
+const boardLink = el("a", null, "Phrases"); boardLink.href = "#board-sec";
+document.getElementById("nav").append(boardLink);
+renderBoard();
+window.__FC_P = P.map(p => ({ ...p, phrase: p.v.join(" / ") + " " + p.rest }));
+/* ===== Flashcards injected as Drill 1 ===== */
+(function () {
+  const P = window.__FC_P;
+  const byId = Object.fromEntries(P.map(p => [p.id, p]));
+  const RENDER = {};
+/* ===== Flashcards (auto Drill 1) ===== */
+const sayText = p => (p.say || p.phrase)
+  .replace(/\([^)]*\)/g, " ").replace(/→/g, ", ").replace(/…|\.\.\./g, " ")
+  .replace(/\bsb\b/g, "someone").replace(/\bsth\b/g, "something")
+  .replace(/\s\/\s/g, " or ").replace(/^-/, "").replace(/\s+/g, " ").trim();
+let VOICE = null;
+function pickVoice() {
+  try {
+    const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+    VOICE = vs.find(v => /en[-_]GB/i.test(v.lang) && /google|natural|online|serena|daniel|kate/i.test(v.name))
+      || vs.find(v => /en[-_]GB/i.test(v.lang)) || vs.find(v => /en[-_]US/i.test(v.lang)) || vs[0] || null;
+  } catch (e) { VOICE = null; }
+}
+try { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; } catch (e) {}
+function speak(text) {
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    if (VOICE) u.voice = VOICE;
+    u.lang = VOICE ? VOICE.lang : "en-GB";
+    u.rate = 0.9;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+const HAS_TTS = typeof window !== "undefined" && "speechSynthesis" in window;
+
+RENDER.cards = function (d) {
+  let deck = P.map(p => p.id), pos = 0, flipped = false, ruFirst = false, known = 0, auto = false;
+  d.total = deck.length;
+  const box = el("div", "fc");
+  const tools = el("div", "fc-tools");
+  const mk = (txt, title) => { const b = el("button", "btn ghost", txt); b.type = "button"; if (title) b.title = title; return b; };
+  const bShuf = mk("Shuffle"), bDir = mk("Russian first"), bAuto = mk("Auto-sound: off");
+  tools.append(bShuf, bDir);
+  if (HAS_TTS) tools.append(bAuto);
+  const flip = el("div", "flip"); flip.tabIndex = 0; flip.setAttribute("role", "button");
+  const inner = el("div", "flip-in");
+  const front = el("div", "face front"), back = el("div", "face back");
+  inner.append(front, back); flip.append(inner);
+  const nav = el("div", "fc-nav");
+  const bPrev = mk("‹"), bNext = mk("›"), count = el("span", "fc-count");
+  bPrev.setAttribute("aria-label", "previous"); bNext.setAttribute("aria-label", "next");
+  nav.append(bPrev, count, bNext);
+  const rate = el("div", "fc-rate");
+  const bAgain = el("button", "btn again", "Again · Ещё раз"), bKnow = el("button", "btn know", "I know it · Знаю");
+  bAgain.type = bKnow.type = "button";
+  rate.append(bAgain, bKnow);
+  const done = el("div", "fc-done");
+  box.append(tools, flip, nav, rate, done);
+  d.body.append(box);
+
+  const face = (node, p, en) => {
+    node.innerHTML = "";
+    if (en) {
+      node.append(el("div", "fc-word", p.phrase));
+      if (HAS_TTS) {
+        const s = el("button", "speak", "🔊"); s.type = "button"; s.setAttribute("aria-label", "listen");
+        s.addEventListener("click", e => { e.stopPropagation(); speak(sayText(p)); });
+        node.append(s);
+      }
+    } else {
+      node.append(el("div", "fc-ru", p.ru));
+      if (p.en) node.append(el("div", "fc-def", p.en));
+    }
+    node.append(el("div", "fc-hint", "tap to flip"));
+  };
+  function show() {
+    done.innerHTML = "";
+    const left = deck.length > 0;
+    [flip, nav, rate].forEach(x => x.hidden = !left);
+    if (!left) {
+      done.append(el("p", null, `All ${P.length} cards done! Now go to Drill 2.`));
+      const r = mk("Go through the cards again"); r.addEventListener("click", () => { deck = P.map(p => p.id); known = 0; d.ok = 0; setScore(d); pos = 0; show(); });
+      done.append(r);
+      return;
+    }
+    pos = (pos + deck.length) % deck.length;
+    const p = byId[deck[pos]];
+    flipped = false; flip.classList.remove("on");
+    face(front, p, !ruFirst); face(back, p, ruFirst);
+    count.textContent = `${pos + 1} / ${deck.length}`;
+    if (auto && !ruFirst) speak(sayText(p));
+  }
+  function turn() {
+    flipped = !flipped; flip.classList.toggle("on", flipped);
+    if (auto && ruFirst && flipped) speak(sayText(byId[deck[pos]]));
+  }
+  flip.addEventListener("click", turn);
+  flip.addEventListener("keydown", e => {
+    if (e.key === " " || e.key === "Enter") { e.preventDefault(); turn(); }
+    else if (e.key === "ArrowRight") { pos++; show(); }
+    else if (e.key === "ArrowLeft") { pos--; show(); }
+  });
+  bPrev.addEventListener("click", () => { pos--; show(); });
+  bNext.addEventListener("click", () => { pos++; show(); });
+  bShuf.addEventListener("click", () => { deck = shuffle(deck); pos = 0; show(); });
+  bDir.addEventListener("click", () => { ruFirst = !ruFirst; bDir.textContent = ruFirst ? "English first" : "Russian first"; show(); });
+  bAuto.addEventListener("click", () => { auto = !auto; bAuto.textContent = `Auto-sound: ${auto ? "on" : "off"}`; if (auto) show(); });
+  bKnow.addEventListener("click", () => { deck.splice(pos, 1); known++; d.ok = known; setScore(d); show(); });
+  bAgain.addEventListener("click", () => { const id = deck.splice(pos, 1)[0]; deck.push(id); if (pos >= deck.length - 1 && deck.length > 1) pos = deck.length - 1; show(); });
+  show();
+};
+
+  const d = card(0, "Flashcards", "Look at the card and say what it means. Tap the card to flip it, 🔊 to listen. Then tap “I know it” or “Again” – the “Again” cards come back at the end.", "Cards");
+  const build = () => { d.ok = 0; d.total = 0; RENDER.cards(d); setScore(d); resetBtn(d, build); };
+  build();
+})();
+drill1(); drill2(); drill3(); drill4(); drill5();
+</script>
