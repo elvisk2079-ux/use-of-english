@@ -1,0 +1,111 @@
+// TITLE: To Do or Doing?
+// EYEBROW: Use of English B2 · Unit 6 · Grammar Revision: Infinitive and -ing form
+// SUB: Thirteen patterns: see sb do, admit doing, beg sb to do, be used to doing, prevent sb from doing, is believed to have done, too … to do, make sb do / be made to do, seem to… Five drills.
+// BOARD: Your patterns
+const META = { ls: "uoe-b2-u6-inf" };
+const P = [
+  { id: "senses", phrase: "see / hear / watch sb do / doing", ru: "видеть / слышать, как кто-то делает (полностью / в процессе)" },
+  { id: "forgive", phrase: "forgive / admit / avoid / mind + -ing", ru: "глаголы, после которых -ing" },
+  { id: "beg", phrase: "beg / encourage / allow sb to do", ru: "просить / побуждать / разрешать кому-то сделать" },
+  { id: "accustomed", phrase: "be / get used to + -ing", ru: "привыкнуть к (+ -ing)" },
+  { id: "usedto", phrase: "used to + do", ru: "раньше (регулярно) делал" },
+  { id: "prevent", phrase: "prevent / stop sb from doing", ru: "помешать кому-то сделать" },
+  { id: "infavour", phrase: "in favour of / object to / How about + -ing", ru: "предлоги + -ing" },
+  { id: "believed", phrase: "is believed / said to do / to have done", ru: "считается, что (он) сделал" },
+  { id: "likely", phrase: "be likely / unlikely to do", ru: "вероятно / маловероятно" },
+  { id: "ittook", phrase: "it took me (time) to do", ru: "у меня ушло (время) на то, чтобы" },
+  { id: "toofor", phrase: "too … (for sb) to do / not … enough to do", ru: "слишком …, чтобы / недостаточно …, чтобы" },
+  { id: "make", phrase: "make sb do / be made to do", ru: "заставить кого-то / быть вынужденным" },
+  { id: "seem", phrase: "seem / appear to do / to have done", ru: "кажется, (он) делает / сделал" }
+];
+const DRILLS = [
+  { type: "gaps", title: "Choose the right form", short: "Choose", instr: "Tap the correct form of the verb.",
+    items: [
+      { id: "senses", t: "We watched the ship {{*disappear|to disappear|disappeared}} over the horizon." },
+      { id: "senses", t: "I heard someone {{*singing|to sing|sung}} in the next room." },
+      { id: "forgive", t: "Forgive me for {{*getting|to get|get}} so angry." },
+      { id: "forgive", t: "He admitted {{*stealing|to steal|steal}} the money." },
+      { id: "beg", t: "She begged her brother {{*to lend|lending|lend}} her his car." },
+      { id: "beg", t: "My teacher encouraged me {{*to take|taking|take}} the exam." },
+      { id: "accustomed", t: "The children weren't used to {{*living|live|lived}} in a village." },
+      { id: "accustomed", t: "You'll soon get used to {{*getting up|get up|got up}} early." },
+      { id: "usedto", t: "Helen used to {{*wake|waking|woke}} up early when she was a student." },
+      { id: "prevent", t: "The rain prevented us from {{*going|go|to go}} out." },
+      { id: "prevent", t: "Nothing can stop him from {{*winning|win|to win}}." },
+      { id: "infavour", t: "I'm in favour of {{*keeping|keep|to keep}} the park as it is." },
+      { id: "infavour", t: "How about {{*leaving|leave|to leave}} on Thursday evening?" },
+      { id: "infavour", t: "She objects to {{*working|work|worked}} at weekends." },
+      { id: "believed", t: "That man is believed {{*to have caused|causing|to cause}} the accident yesterday." },
+      { id: "believed", t: "The painting is said {{*to be|being|be}} worth millions." },
+      { id: "likely", t: "They are unlikely {{*to come|coming|come}} home early tonight." },
+      { id: "likely", t: "It's likely {{*to rain|raining|rain}} this afternoon." },
+      { id: "ittook", t: "It took me three hours {{*to get|getting|get}} home." },
+      { id: "ittook", t: "It took her a year {{*to learn|learning|learn}} to drive." },
+      { id: "toofor", t: "The coffee was too hot for me {{*to drink|to drink it|drinking}}." },
+      { id: "toofor", t: "He isn't old enough {{*to drive|driving|drive}}." },
+      { id: "make", t: "The teacher made Judy {{*apologise|to apologise|apologising}}." },
+      { id: "make", t: "Judy was made {{*to apologise|apologise|apologising}}." },
+      { id: "seem", t: "He seems {{*to hate|hating|hate}} animals." },
+      { id: "seem", t: "She appears {{*to have lost|losing|to lose}} a lot of weight since last summer." }
+    ],
+    note: "make sb DO (active) → sb was made TO DO (passive). see/hear sb DO (the whole action) or DOING (part of it); passive: was seen/heard TO DO. too / enough + to do – no object pronoun at the end: too hot to drink (NOT to drink it)." },
+  { type: "gaps", title: "Write the verb", short: "Write it", instr: "Write the correct form of the verb in capitals.",
+    items: [
+      { id: "senses", t: "I saw him [[cross]] ^CROSS^ the road and get into a car." },
+      { id: "forgive", t: "Do you mind [[opening]] ^OPEN^ the window?" },
+      { id: "beg", t: "My parents allowed me [[to go]] ^GO^ to the concert." },
+      { id: "accustomed", t: "I'm not used to [[drinking]] ^DRINK^ coffee without sugar." },
+      { id: "accustomed", t: "She's getting used to [[working]] ^WORK^ at night." },
+      { id: "usedto", t: "We used [[to live]] ^LIVE^ in Omsk." },
+      { id: "prevent", t: "The fog prevented the plane from [[landing]] ^LAND^." },
+      { id: "infavour", t: "Thank you for [[helping]] ^HELP^ me." },
+      { id: "believed", t: "The thief is thought [[to have left]] ^LEAVE^ the country last week." },
+      { id: "likely", t: "The shop is likely [[to close]] ^CLOSE^ early today." },
+      { id: "ittook", t: "It took us an hour [[to find]] ^FIND^ a parking space." },
+      { id: "toofor", t: "The box was too heavy for me [[to carry]] ^CARRY^." },
+      { id: "make", t: "My mum makes me [[tidy]] ^TIDY^ my room every Saturday." },
+      { id: "make", t: "We were made [[to wait]] ^WAIT^ for two hours." },
+      { id: "seem", t: "He seems [[to know]] ^KNOW^ everybody here." }
+    ] },
+  { type: "tf", title: "Right or wrong?", short: "Right or wrong", instr: "Is the sentence correct?",
+    items: [
+      { id: "toofor", t: "The coffee was too cold for me to drink it.", ok: false, fix: "The coffee was too cold for me to drink." },
+      { id: "toofor", t: "The coffee wasn't hot enough for me to drink.", ok: true },
+      { id: "accustomed", t: "Helen is used to wake up early.", ok: false, fix: "Helen is used to waking up early." },
+      { id: "usedto", t: "Helen used to wake up early.", ok: true },
+      { id: "senses", t: "We heard John to sing a song.", ok: false, fix: "We heard John sing a song." },
+      { id: "senses", t: "John was heard to sing a song.", ok: true },
+      { id: "make", t: "The teacher made Judy to apologise.", ok: false, fix: "The teacher made Judy apologise." },
+      { id: "infavour", t: "She objects to staying up late.", ok: true },
+      { id: "seem", t: "He seems that he hates animals.", ok: false, fix: "It seems that he hates animals. / He seems to hate animals." },
+      { id: "seem", t: "She appears not to have lost much weight.", ok: true },
+      { id: "likely", t: "John is likely to be interested in football.", ok: true },
+      { id: "prevent", t: "He prevented them to go out.", ok: false, fix: "He prevented them from going out." },
+      { id: "infavour", t: "I'm in favour of to build a new park.", ok: false, fix: "I'm in favour of building a new park." },
+      { id: "forgive", t: "He admitted to steal the money.", ok: false, fix: "He admitted stealing / having stolen the money." }
+    ] },
+  { type: "order", title: "Build the sentence", short: "Build it", instr: "Build a sentence that means the same as the one in brackets.",
+    items: [
+      { id: "make", q: "(The police forced him to get into the car.)", s: "The police made him get into the car." },
+      { id: "toofor", q: "(The box was so heavy that I couldn't carry it.)", s: "The box was too heavy for me to carry." },
+      { id: "seem", q: "(It seems that she is tired.)", s: "She seems to be tired." },
+      { id: "likely", q: "(It is likely that he will win.)", s: "He is likely to win." },
+      { id: "prevent", q: "(The rain stopped us. We couldn't go out.)", s: "The rain prevented us from going out." },
+      { id: "ittook", q: "(I spent two hours doing my homework.)", s: "It took me two hours to do my homework." },
+      { id: "accustomed", q: "(Getting up early is still hard for her.)", s: "She isn't used to getting up early." },
+      { id: "believed", q: "(People believe that he caused the accident.)", s: "He is believed to have caused the accident." }
+    ] },
+  { type: "translate", title: "Say it in English", short: "Translate", instr: "Say it aloud, then type it. The check looks for the grammar pattern.",
+    items: [
+      { id: "make", ru: "Мама заставила меня убраться.", en: "Mum made me tidy up.", key: "made me (tidy|clean)" },
+      { id: "accustomed", ru: "Я привыкла рано вставать.", en: "I'm used to getting up early.", key: "used to getting up" },
+      { id: "usedto", ru: "Раньше я играла на пианино.", en: "I used to play the piano.", key: "used to play" },
+      { id: "prevent", ru: "Дождь помешал нам пойти гулять.", en: "The rain prevented us from going for a walk.", key: "(prevented|stopped) us from going" },
+      { id: "ittook", ru: "У меня ушёл час на дорогу.", en: "It took me an hour to get there.", key: "took me an hour to" },
+      { id: "likely", ru: "Он вряд ли придёт.", en: "He is unlikely to come.", key: "unlikely to come" },
+      { id: "seem", ru: "Кажется, он устал.", en: "He seems to be tired.", key: "seems to be tired|seems tired" },
+      { id: "toofor", ru: "Он слишком молод, чтобы водить машину.", en: "He is too young to drive.", key: "too young to drive" },
+      { id: "senses", ru: "Я видела, как он ушёл.", en: "I saw him leave.", key: "saw him (leave|go|leaving)" },
+      { id: "infavour", ru: "Как насчёт того, чтобы пойти в кино?", en: "How about going to the cinema?", key: "how about going" }
+    ] }
+];

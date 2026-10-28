@@ -1,0 +1,120 @@
+// TITLE: In, On or At?
+// EYEBROW: Use of English B2 · Unit 2 · Prepositional Phrases A–B (place)
+// SUB: Prepositions of place: on a farm, at work, in the suburbs, at the crossroads, in hospital… Twenty-eight phrases, five drills.
+const META = { ls: "uoe-b2-u2-place" };
+const P = [
+  { id: "farm", phrase: "on a farm", ru: "на ферме" },
+  { id: "work", phrase: "at work", ru: "на работе" },
+  { id: "town", phrase: "in town", ru: "в городе (в центре)" },
+  { id: "university", phrase: "at university", ru: "в университете" },
+  { id: "country", phrase: "in the country", ru: "за городом, в сельской местности" },
+  { id: "right", phrase: "on the right / left", ru: "справа / слева" },
+  { id: "north", phrase: "in the North", ru: "на севере" },
+  { id: "address", phrase: "at 17 Walkley Road", ru: "по адресу (с номером дома)" },
+  { id: "outskirts", phrase: "on the outskirts", ru: "на окраине" },
+  { id: "island", phrase: "on an island", ru: "на острове" },
+  { id: "prison", phrase: "in prison", ru: "в тюрьме" },
+  { id: "back", phrase: "at / on the back of", ru: "сзади, на обороте" },
+  { id: "door", phrase: "at the door", ru: "у двери" },
+  { id: "mountains", phrase: "in the mountains", ru: "в горах" },
+  { id: "crossroads", phrase: "at the crossroads", ru: "на перекрёстке" },
+  { id: "queue", phrase: "in a queue", ru: "в очереди" },
+  { id: "school", phrase: "at school", ru: "в школе" },
+  { id: "suburbs", phrase: "in the suburbs", ru: "в пригороде" },
+  { id: "row", phrase: "in rows / a row", ru: "рядами, в ряд" },
+  { id: "street", phrase: "in / on Park Avenue", ru: "на улице (без номера)" },
+  { id: "hospitalat", phrase: "at the hospital", ru: "в больнице (работает, навещает)" },
+  { id: "corner", phrase: "in the corner (of a room)", ru: "в углу (комнаты)" },
+  { id: "front", phrase: "at the front (of)", ru: "впереди, в передней части" },
+  { id: "river", phrase: "on the river", ru: "на реке" },
+  { id: "streets", phrase: "in / on the streets", ru: "на улицах" },
+  { id: "hospitalin", phrase: "in hospital", ru: "в больнице (как пациент)" },
+  { id: "streetcorner", phrase: "at / on the corner (of a street)", ru: "на углу (улицы)" },
+  { id: "infront", phrase: "in front of", ru: "перед" }
+];
+const IOA = (right) => "{{" + ["in", "on", "at"].map(p => (right.includes(p) ? "*" : "") + p).join("|") + "}}";
+const DRILLS = [
+  { type: "gaps", title: "In, on or at?", short: "Quick choice", shuffleOptions: false, instr: "Tap the right preposition. Some phrases take two.",
+    items: P.map(p => {
+      const m = { farm: ["on"], work: ["at"], town: ["in"], university: ["at"], country: ["in"], right: ["on"], north: ["in"], address: ["at"], outskirts: ["on"], island: ["on"], prison: ["in"], back: ["at", "on"], door: ["at"], mountains: ["in"], crossroads: ["at"], queue: ["in"], school: ["at"], suburbs: ["in"], row: ["in"], street: ["in", "on"], hospitalat: ["at"], corner: ["in"], front: ["at"], river: ["on"], streets: ["in", "on"], hospitalin: ["in"], streetcorner: ["at", "on"], infront: ["in"] }[p.id];
+      const rest = p.phrase.replace(/^(in \/ on|at \/ on|on|in|at) /, "");
+      return { id: p.id, t: IOA(m) + " " + rest };
+    }),
+    note: "in hospital = as a patient; at the hospital = you work there or visit. at + a house number (at 17 Walkley Road), but in / on + a street name (in / on Park Avenue)." },
+  { type: "gaps", title: "Sentences", short: "Sentences", shuffleOptions: false, instr: "Tap in, on or at in each sentence.",
+    items: [
+      { id: "farm", t: "My grandparents live {{in|*on|at}} a farm with twenty cows." },
+      { id: "work", t: "Mum is {{in|on|*at}} work until six." },
+      { id: "university", t: "My sister is studying medicine {{in|on|*at}} university." },
+      { id: "country", t: "We'd love to live {{*in|on|at}} the country, far from the noise." },
+      { id: "right", t: "The bank is {{in|*on|at}} the left, next to the café." },
+      { id: "north", t: "It's much colder {{*in|on|at}} the North of Russia." },
+      { id: "address", t: "They live {{in|on|*at}} 25 Garden Street." },
+      { id: "outskirts", t: "The new stadium is {{in|*on|at}} the outskirts of the city." },
+      { id: "island", t: "We spent our holiday {{in|*on|at}} a small Greek island." },
+      { id: "prison", t: "The thief spent three years {{*in|on|at}} prison." },
+      { id: "door", t: "There's someone {{in|on|*at}} the door – can you open it?" },
+      { id: "mountains", t: "They built a cabin {{*in|on|at}} the mountains." },
+      { id: "crossroads", t: "Turn left {{in|on|*at}} the crossroads." },
+      { id: "queue", t: "We waited {{*in|on|at}} a queue for an hour." },
+      { id: "suburbs", t: "Most families with children live {{*in|on|at}} the suburbs." },
+      { id: "row", t: "The chairs were arranged {{*in|on|at}} rows." },
+      { id: "hospitalat", t: "My aunt works as a nurse {{in|on|*at}} the hospital." },
+      { id: "hospitalin", t: "He broke his leg and was {{*in|on|at}} hospital for a week." },
+      { id: "corner", t: "There's a big plant {{*in|on|at}} the corner of the living room." },
+      { id: "front", t: "I always sit {{in|on|*at}} the front of the bus." },
+      { id: "river", t: "We went on a boat trip {{in|*on|at}} the river." },
+      { id: "infront", t: "Don't park {{*in|on|at}} front of the garage!" },
+      { id: "streetcorner", t: "Wait for me {{in|*on|*at}} the corner of the street." },
+      { id: "school", t: "The children are {{in|on|*at}} school until three." }
+    ] },
+  { type: "gaps", title: "Type the preposition", short: "Type it", instr: "Write in, on or at. Press Enter or Check.",
+    items: [
+      { id: "town", t: "Let's meet [[in]] town on Saturday and go shopping." },
+      { id: "farm", t: "Have you ever stayed [[on]] a farm?" },
+      { id: "work", t: "I can't use my phone [[at]] work." },
+      { id: "island", t: "Robinson Crusoe lived alone [[on]] an island." },
+      { id: "back", t: "Write your name [[on/at]] the back of the photo." },
+      { id: "mountains", t: "It snows a lot [[in]] the mountains." },
+      { id: "address", t: "The museum is [[at]] 10 Main Street." },
+      { id: "street", t: "Their office is [[in/on]] Oxford Street." },
+      { id: "streets", t: "On New Year's Eve, thousands of people dance [[in/on]] the streets." },
+      { id: "prison", t: "He was sent to prison and is still [[in]] prison now." },
+      { id: "outskirts", t: "IKEA is usually [[on]] the outskirts of town." },
+      { id: "queue", t: "Please wait [[in]] the queue like everyone else." },
+      { id: "hospitalin", t: "Grandpa is [[in]] hospital, but he's getting better." },
+      { id: "infront", t: "A tall man was standing [[in]] front of me at the concert." },
+      { id: "corner", t: "The TV is [[in]] the corner of the room." },
+      { id: "crossroads", t: "There was an accident [[at]] the crossroads." }
+    ] },
+  { type: "tf", title: "Right or wrong?", short: "Right or wrong", instr: "Is the preposition correct?",
+    items: [
+      { id: "farm", t: "She grew up in a farm.", ok: false, fix: "She grew up on a farm." },
+      { id: "university", t: "My brother is at university in Kazan.", ok: true },
+      { id: "address", t: "We live on 15 Lenin Street.", ok: false, fix: "We live at 15 Lenin Street." },
+      { id: "island", t: "Malta is a country on an island.", ok: true },
+      { id: "outskirts", t: "Our school is in the outskirts of the city.", ok: false, fix: "Our school is on the outskirts of the city." },
+      { id: "hospitalin", t: "She's in hospital after the operation.", ok: true },
+      { id: "door", t: "Someone is in the door.", ok: false, fix: "Someone is at the door." },
+      { id: "suburbs", t: "They moved to a house in the suburbs.", ok: true },
+      { id: "front", t: "The teacher asked me to sit on the front of the class.", ok: false, fix: "…to sit at the front of the class." },
+      { id: "river", t: "There are lots of boats on the river.", ok: true },
+      { id: "north", t: "My family lives at the North.", ok: false, fix: "My family lives in the North." },
+      { id: "crossroads", t: "Stop at the crossroads.", ok: true }
+    ] },
+  { type: "translate", title: "Say it in English", short: "Translate", instr: "Say it aloud, then type it. The check looks for the right preposition phrase.",
+    items: [
+      { id: "farm", ru: "Мои бабушка и дедушка живут на ферме.", en: "My grandparents live on a farm.", key: "on a farm" },
+      { id: "work", ru: "Папа сейчас на работе.", en: "Dad is at work now.", key: "at work" },
+      { id: "country", ru: "Летом мы живём за городом.", en: "In summer we live in the country.", key: "in the country(side)?" },
+      { id: "outskirts", ru: "Наш дом на окраине города.", en: "Our house is on the outskirts of the city.", key: "on the outskirts" },
+      { id: "island", ru: "Они живут на острове.", en: "They live on an island.", key: "on an island" },
+      { id: "hospitalin", ru: "Она в больнице с гриппом.", en: "She is in hospital with flu.", key: "in (the )?hospital" },
+      { id: "crossroads", ru: "Поверни направо на перекрёстке.", en: "Turn right at the crossroads.", key: "at the crossroads" },
+      { id: "queue", ru: "Мы стояли в очереди полчаса.", en: "We stood in a queue for half an hour.", key: "in (a|the) queue" },
+      { id: "suburbs", ru: "Многие семьи живут в пригороде.", en: "Many families live in the suburbs.", key: "in the suburbs" },
+      { id: "infront", ru: "Машина стоит перед домом.", en: "The car is in front of the house.", key: "in front of" },
+      { id: "corner", ru: "В углу комнаты стоит лампа.", en: "There is a lamp in the corner of the room.", key: "in the corner" },
+      { id: "mountains", ru: "Мы провели неделю в горах.", en: "We spent a week in the mountains.", key: "in the mountains" }
+    ] }
+];

@@ -1,0 +1,96 @@
+// TITLE: From Now On
+// EYEBROW: Use of English B2 · Unit 2 · Prepositional Phrases C
+// SUB: Sixteen fixed phrases with in, on, at, by, for, from and out: at the moment, for ages, by now, out of date… Five drills.
+const META = { ls: "uoe-b2-u2-timephr" };
+const P = [
+  { id: "onday", phrase: "on Tuesday", ru: "во вторник", en: "used with days of the week" },
+  { id: "latest", phrase: "at the (very) latest", ru: "самое позднее", en: "not later than this" },
+  { id: "life", phrase: "for life", ru: "на всю жизнь", en: "until you die; for ever" },
+  { id: "meantime", phrase: "in the meantime", ru: "тем временем, пока", en: "in the time between two events" },
+  { id: "inbeginning", phrase: "in the beginning", ru: "вначале (сначала)", en: "at first, before things changed" },
+  { id: "birthday", phrase: "on / for my birthday", ru: "в мой день рождения / на день рождения", en: "on the day itself / as a present or celebration" },
+  { id: "outofdate", phrase: "out of date", ru: "устаревший, просроченный", en: "old-fashioned or no longer valid" },
+  { id: "atbeginning", phrase: "at the beginning (of)", ru: "в начале (чего-то)", en: "at the first part of something (a book, a film, the month)" },
+  { id: "fromnow", phrase: "from now on", ru: "отныне, с этого момента", en: "starting now and continuing in the future" },
+  { id: "ages", phrase: "for ages", ru: "целую вечность, очень давно", en: "for a very long time" },
+  { id: "weekend", phrase: "at the weekend", ru: "в выходные", en: "on Saturday and Sunday (British English)" },
+  { id: "niceday", phrase: "on such a nice day", ru: "в такой хороший день", en: "on + a particular day" },
+  { id: "moment", phrase: "at the moment", ru: "в данный момент", en: "now" },
+  { id: "while", phrase: "in a while", ru: "через некоторое время", en: "soon; after a short time" },
+  { id: "byday", phrase: "by day", ru: "днём", en: "during the day (opposite: by night)" },
+  { id: "bynow", phrase: "by now", ru: "уже (к этому времени)", en: "before or at this time" }
+];
+const DRILLS = [
+  { type: "gaps", title: "Choose the preposition", short: "Preposition", instr: "Tap the word that completes the phrase.",
+    items: [
+      { id: "onday", t: "The exam is {{*on|in|at}} Friday." },
+      { id: "latest", t: "Send me your essay by Monday {{*at|in|on}} the latest." },
+      { id: "life", t: "A dog is {{*for|in|on}} life, not just for Christmas." },
+      { id: "meantime", t: "Dinner will be ready in twenty minutes. {{*In|At|On}} the meantime, lay the table." },
+      { id: "inbeginning", t: "{{*In|At|On}} the beginning I hated London, but now I love it." },
+      { id: "birthday", t: "What did you get {{*for|in|at}} your birthday?" },
+      { id: "birthday", t: "It always rains {{*on|in|at}} my birthday!" },
+      { id: "outofdate", t: "This map is {{*out|off|from}} of date – the new roads aren't on it." },
+      { id: "atbeginning", t: "The answers are {{*at|in|on}} the beginning of the book." },
+      { id: "fromnow", t: "{{*From|Since|By}} now on, I'm going to go to bed earlier." },
+      { id: "ages", t: "I haven't been to the cinema {{*for|since|in}} ages." },
+      { id: "weekend", t: "What are you doing {{*at|in|by}} the weekend?" },
+      { id: "niceday", t: "Why are you staying indoors {{*on|in|at}} such a nice day?" },
+      { id: "moment", t: "She can't come to the phone {{*at|in|on}} the moment." },
+      { id: "while", t: "I'm busy now, but I'll call you back {{*in|at|for}} a while." },
+      { id: "byday", t: "Owls sleep {{*by|in|at}} day and hunt at night." },
+      { id: "bynow", t: "The film started at seven – it should be over {{*by|at|in}} now." },
+      { id: "outofdate", t: "My passport is {{*out|off|over}} of date, so I need a new one." }
+    ],
+    note: "in the beginning = at first (then things changed). at the beginning of = at the start of something: at the beginning of the film." },
+  { type: "meaning", title: "What does it mean?", short: "Meaning", instr: "Read the meaning and tap the phrase.",
+    ids: ["latest", "life", "meantime", "inbeginning", "outofdate", "atbeginning", "fromnow", "ages", "moment", "while", "byday", "bynow"] },
+  { type: "gaps", title: "Type the missing word", short: "Type it", instr: "Write the missing preposition. Press Enter or Check.",
+    items: [
+      { id: "onday", t: "We have English [[on]] Mondays and Wednesdays." },
+      { id: "latest", t: "Be home by eleven [[at]] the very latest." },
+      { id: "life", t: "They became friends [[for]] life." },
+      { id: "meantime", t: "The doctor will see you soon. [[In]] the meantime, please fill in this form." },
+      { id: "inbeginning", t: "[[In]] the beginning, the job was hard, but it got easier." },
+      { id: "outofdate", t: "These phones are completely [[out]] of date." },
+      { id: "atbeginning", t: "Read the instructions [[at]] the beginning of the test." },
+      { id: "fromnow", t: "[[From]] now on, no phones in class!" },
+      { id: "ages", t: "Where have you been? I've been waiting [[for]] ages!" },
+      { id: "weekend", t: "We usually visit our grandparents [[at]] the weekend." },
+      { id: "moment", t: "I'm reading a great book [[at]] the moment." },
+      { id: "while", t: "Wait here – the bus will come [[in]] a while." },
+      { id: "byday", t: "The city looks completely different [[by]] day." },
+      { id: "bynow", t: "He left an hour ago, so he should be home [[by]] now." },
+      { id: "birthday", t: "My parents gave me a bike [[for]] my birthday." }
+    ] },
+  { type: "tf", title: "Right or wrong?", short: "Right or wrong", instr: "Is the phrase correct?",
+    items: [
+      { id: "onday", t: "See you in Saturday!", ok: false, fix: "See you on Saturday!" },
+      { id: "moment", t: "I'm very busy at the moment.", ok: true },
+      { id: "ages", t: "I haven't seen him since ages.", ok: false, fix: "I haven't seen him for ages." },
+      { id: "weekend", t: "What did you do at the weekend?", ok: true },
+      { id: "fromnow", t: "Since now on, I'll be more careful.", ok: false, fix: "From now on, I'll be more careful." },
+      { id: "outofdate", t: "This yoghurt is out of date.", ok: true },
+      { id: "atbeginning", t: "In the beginning of the film, the hero is a child.", ok: false, fix: "At the beginning of the film, the hero is a child." },
+      { id: "bynow", t: "They should be here by now.", ok: true },
+      { id: "while", t: "I'll be back at a while.", ok: false, fix: "I'll be back in a while." },
+      { id: "latest", t: "Finish it by Friday on the latest.", ok: false, fix: "Finish it by Friday at the latest." },
+      { id: "life", t: "Some people stay in the same job for life.", ok: true },
+      { id: "meantime", t: "In the meantime, let's have a coffee.", ok: true }
+    ] },
+  { type: "translate", title: "Say it in English", short: "Translate", instr: "Say it aloud, then type it. The check looks for the phrase.",
+    items: [
+      { id: "moment", ru: "Сейчас я занята.", en: "I'm busy at the moment.", key: "at the moment" },
+      { id: "ages", ru: "Я не видела тебя целую вечность!", en: "I haven't seen you for ages!", key: "for ages" },
+      { id: "fromnow", ru: "Отныне я буду бегать каждый день.", en: "From now on, I will run every day.", key: "from now on" },
+      { id: "weekend", ru: "Что ты делаешь в выходные?", en: "What are you doing at the weekend?", key: "at the weekend|on the weekend" },
+      { id: "while", ru: "Я перезвоню через некоторое время.", en: "I'll call you back in a while.", key: "in a while" },
+      { id: "bynow", ru: "Они уже должны быть здесь.", en: "They should be here by now.", key: "by now" },
+      { id: "latest", ru: "Сдай работу самое позднее в пятницу.", en: "Hand in the work on Friday at the latest.", key: "at the (very )?latest" },
+      { id: "outofdate", ru: "Этот словарь устарел.", en: "This dictionary is out of date.", key: "out of date" },
+      { id: "meantime", ru: "Тем временем я приготовлю чай.", en: "In the meantime, I'll make some tea.", key: "in the meantime" },
+      { id: "atbeginning", ru: "В начале урока мы повторили слова.", en: "At the beginning of the lesson, we revised the words.", key: "at the beginning of" },
+      { id: "life", ru: "Это друг на всю жизнь.", en: "This is a friend for life.", key: "for life" },
+      { id: "birthday", ru: "Что тебе подарили на день рождения?", en: "What did you get for your birthday?", key: "for your birthday" }
+    ] }
+];

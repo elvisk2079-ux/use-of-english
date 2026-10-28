@@ -1,0 +1,103 @@
+// TITLE: Aim, Achieve, Succeed
+// EYEBROW: Use of English B2 · Unit 1 · Words Easily Confused E–H
+// SUB: Twenty words about goals, success and doing a job well. Learn which noun, verb and preposition belong together.
+// BOARD: Your words
+const META = { ls: "uoe-b2-u1-confEH" };
+const P = [
+  { id: "aim", phrase: "aim", ru: "цель (чего мы хотим добиться)", en: "the purpose of what you do; what you hope to achieve" },
+  { id: "goal", phrase: "goal", ru: "цель (к которой стремишься)", en: "something you work hard to reach over time" },
+  { id: "intention", phrase: "intention (of doing)", ru: "намерение", en: "a plan in your mind to do something (I have no intention of…)" },
+  { id: "challenge", phrase: "challenge", ru: "вызов, трудная задача", en: "something difficult that tests your ability" },
+  { id: "success", phrase: "success", ru: "успех", en: "a person or thing that achieves good results (a great success)" },
+  { id: "ambition", phrase: "ambition", ru: "амбиции, стремление; мечта", en: "a strong wish to be successful; something you very much want to do" },
+  { id: "achieve", phrase: "achieve", ru: "достигать (результатов)", en: "reach a result through hard work (achieve good results)" },
+  { id: "fulfil", phrase: "fulfil", ru: "осуществить (мечту), выполнить", en: "make a dream, ambition or promise come true" },
+  { id: "cope", phrase: "cope (with)", ru: "справляться (с)", en: "deal successfully with something difficult" },
+  { id: "deal", phrase: "deal (with)", ru: "иметь дело (с), разбираться", en: "take action to solve a problem; work with people" },
+  { id: "face", phrase: "face", ru: "столкнуться (с)", en: "have to deal with a difficult situation (face problems)" },
+  { id: "succeed", phrase: "succeed (in)", ru: "преуспеть, суметь", en: "manage to do something you tried to do (succeed in doing)" },
+  { id: "manage", phrase: "manage", ru: "управлять, руководить", en: "be in charge of a company or a team" },
+  { id: "run", phrase: "run", ru: "вести (бизнес), управлять", en: "own and control a business or an organisation" },
+  { id: "operate", phrase: "operate", ru: "управлять (машиной), работать на", en: "make a machine work" },
+  { id: "undertake", phrase: "undertake", ru: "взять на себя, предпринять", en: "agree to be responsible for a task and start doing it" },
+  { id: "skills", phrase: "skills", ru: "навыки, умения", en: "abilities you learn and practise (communication skills)" },
+  { id: "qualities", phrase: "qualities", ru: "качества (характера)", en: "parts of a person's character (leadership qualities)" },
+  { id: "qualifications", phrase: "qualifications", ru: "квалификация, дипломы", en: "exams you have passed or degrees you have (a university degree)" },
+  { id: "experience", phrase: "experience", ru: "опыт; впечатление", en: "knowledge from doing a job (uncountable); an event that affects you (countable)" }
+];
+const DRILLS = [
+  { type: "gaps", title: "Choose the word", short: "Choose", instr: "Tap the word that fits the sentence.",
+    items: [
+      { id: "aim", t: "The {{*aim|ambition|intention}} of this project is to clean up the river." },
+      { id: "goal", t: "Set yourself a {{*goal|challenge|success}}: read ten books this year." },
+      { id: "intention", t: "I have no {{*intention|aim|goal}} of moving to another city." },
+      { id: "challenge", t: "Climbing the mountain was a real {{*challenge|success|ambition}}." },
+      { id: "success", t: "The school concert was a great {{*success|achievement|ambition}}." },
+      { id: "ambition", t: "Her {{*ambition|intention|aim}} is to become a famous chef." },
+      { id: "achieve", t: "He worked hard and {{*achieved|succeeded|coped}} excellent results." },
+      { id: "fulfil", t: "At 60, she finally {{*fulfilled|achieved|succeeded}} her dream of visiting Japan." },
+      { id: "cope", t: "How do you {{*cope|deal|face}} with so much homework?" },
+      { id: "deal", t: "The manager will {{*deal|face|cope}} with your complaint tomorrow." },
+      { id: "face", t: "Many families are {{*facing|dealing|coping}} financial problems this year." },
+      { id: "succeed", t: "Did you {{*succeed|achieve|manage}} in getting tickets for the concert?" },
+      { id: "manage", t: "She {{*manages|operates|undertakes}} a team of twenty designers." },
+      { id: "run", t: "My parents {{*run|operate|undertake}} a small café by the sea." },
+      { id: "operate", t: "Only trained staff can {{*operate|run|manage}} this machine." },
+      { id: "undertake", t: "Who will {{*undertake|operate|run}} the training of the new workers?" },
+      { id: "skills", t: "You need good computer {{*skills|qualities|qualifications}} for this job." },
+      { id: "qualities", t: "Honesty and patience are important {{*qualities|skills|qualifications}} in a teacher." },
+      { id: "qualifications", t: "What {{*qualifications|qualities|experiences}} do you have? – A degree in economics." },
+      { id: "experience", t: "Do you have any {{*experience|experiences|skill}} of working with children?" },
+      { id: "experience", t: "Swimming with dolphins was an amazing {{*experience|success|challenge}}!" }
+    ],
+    note: "succeed IN doing; cope WITH / deal WITH a problem; achieve results; fulfil a dream / an ambition. experience of work is uncountable, but an amazing experience is countable." },
+  { type: "meaning", title: "What does it mean?", short: "Meaning", instr: "Read the definition and tap the word." },
+  { type: "gaps", title: "Write the word", short: "Write it", instr: "Write the correct word in the right form. Some gaps need a preposition, too.",
+    bank: ["aim", "goal", "intention", "challenge", "success", "ambition", "achieve", "fulfil", "cope", "deal", "face", "succeed", "manage", "run", "operate", "undertake", "skills", "qualities", "qualifications", "experience"],
+    items: [
+      { id: "succeed", t: "John [[succeeded]] in convincing his boss to give him the day off." },
+      { id: "cope", t: "He doesn't [[cope/deal]] with stress very well." },
+      { id: "fulfil", t: "Despite his injury, Joe [[fulfilled]] his ambition to play for the national team." },
+      { id: "face", t: "The town is [[facing]] serious problems after the flood." },
+      { id: "achieve", t: "Kim put a lot of work into her project and [[achieved]] great results." },
+      { id: "deal", t: "As a teacher, he has [[dealt]] with students from many different backgrounds." },
+      { id: "operate", t: "Read the instructions before you [[operate]] the coffee machine." },
+      { id: "run", t: "Brett couldn't find good staff, so he [[ran]] the shop on his own for a while." },
+      { id: "undertake", t: "Kate agreed to [[undertake]] the organisation of the trip." },
+      { id: "manage", t: "The hotel is [[managed/run]] by two sisters." },
+      { id: "experience", t: "To get this job, you need three years' [[experience]] in sales." },
+      { id: "qualifications", t: "The necessary [[qualifications]] include a university degree." },
+      { id: "qualities", t: "Leadership [[qualities]] are important for a team captain." },
+      { id: "skills", t: "A good receptionist needs excellent communication [[skills]]." },
+      { id: "ambition", t: "People with [[ambition]] always try to reach their goals." },
+      { id: "intention", t: "I have no [[intention]] of changing my plans." },
+      { id: "challenge", t: "That puzzle was a real [[challenge]] – it took me an hour!" },
+      { id: "success", t: "Their first album was a huge [[success]]." }
+    ] },
+  { type: "order", title: "Word order", short: "Word order", instr: "Tap the words in the right order. Tap a word in your answer to send it back.",
+    items: [
+      { id: "succeed", s: "She succeeded in passing all her exams." },
+      { id: "cope", s: "How do you cope with all this stress?" },
+      { id: "fulfil", s: "He finally fulfilled his dream of flying." },
+      { id: "achieve", s: "We achieved excellent results this year." },
+      { id: "run", s: "My aunt runs a small bakery." },
+      { id: "intention", s: "I have no intention of giving up." },
+      { id: "experience", s: "Do you have any experience of teaching?" },
+      { id: "face", s: "The company is facing serious difficulties." }
+    ] },
+  { type: "translate", title: "Say it in English", short: "Translate", instr: "Say it aloud, then type it. The check looks for the right word.",
+    items: [
+      { id: "achieve", ru: "Она достигла отличных результатов.", en: "She achieved excellent results.", key: "achieved" },
+      { id: "fulfil", ru: "Он осуществил свою мечту.", en: "He fulfilled his dream.", key: "fulfill?ed" },
+      { id: "cope", ru: "Я не справляюсь с такой нагрузкой.", en: "I can't cope with so much work.", key: "cope with" },
+      { id: "succeed", ru: "Нам удалось найти дорогу.", en: "We succeeded in finding the way.", key: "succeeded in" },
+      { id: "face", ru: "Мы столкнулись с проблемой.", en: "We faced a problem.", key: "faced|are facing|were facing" },
+      { id: "run", ru: "Мой дядя управляет гостиницей.", en: "My uncle runs a hotel.", key: "runs" },
+      { id: "operate", ru: "Ты умеешь работать на этом станке?", en: "Can you operate this machine?", key: "operate" },
+      { id: "ambition", ru: "Её мечта – стать врачом.", en: "Her ambition is to become a doctor.", key: "ambition" },
+      { id: "challenge", ru: "Этот марафон – настоящее испытание.", en: "This marathon is a real challenge.", key: "challenge" },
+      { id: "skills", ru: "Для этой работы нужны навыки общения.", en: "You need communication skills for this job.", key: "skills" },
+      { id: "qualities", ru: "Терпение – важное качество учителя.", en: "Patience is an important quality for a teacher.", key: "quality|qualities" },
+      { id: "experience", ru: "У меня нет опыта работы.", en: "I don't have any work experience.", key: "experience" }
+    ] }
+];
