@@ -1,7 +1,7 @@
 import sys, re, html, os
 base=os.path.dirname(os.path.abspath(__file__))
 src=open(sys.argv[1]).read(); out=sys.argv[2]
-meta={k:v.strip() for k,v in re.findall(r'^// (TITLE|EYEBROW|SUB|BOARD): (.*)$',src,re.M)}
+meta={k:v.strip() for k,v in re.findall(r'^// (TITLE|EYEBROW|SUB|BOARD|LEAD): (.*)$',src,re.M)}
 meta["SUB"]=re.sub(r"(?<![Ff]lashcards and )\b([Ff])ive drills",lambda m:("Flashcards and f" if m.group(1)=="F" else "flashcards and f")+"ive drills",meta["SUB"],count=1)
 css=open(os.path.join(base,'style.css')).read()
 eng=open(os.path.join(base,'engine.js')).read()
@@ -28,7 +28,7 @@ page=f'''<title>{e(meta["TITLE"])}</title>
 <main class="wrap" id="main">
   <section id="board-sec">
     <h2>{e(meta.get('BOARD','Your phrases'))}</h2>
-    <p class="lead">Every correct answer adds a dot. All dots green = learned. Red frame = repeat this one.</p>
+    <p class="lead">{e(meta.get("LEAD","Every correct answer adds a dot. All dots green = learned. Red frame = repeat this one."))}</p>
     <div class="board" id="board"></div>
     <div class="board-foot">
       <span>Progress is saved in this browser.</span>
