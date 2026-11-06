@@ -1,0 +1,108 @@
+# Spotlight 6 irregular verbs, grouped as in Elena's table "Irregular Verbs Groups".
+# Each verb: (V1, V2, V3, translation, sentence with {} for V2). Several answers: "learnt/learned".
+GROUPS = [
+  (1, "A – A – A", "все три формы одинаковые", [
+    ("cut", "cut", "cut", "резать", "Mum {} the cake into eight pieces yesterday."),
+    ("put", "put", "put", "класть, ставить", "I {} my books on the desk last night."),
+    ("let", "let", "let", "позволять", "Dad {} me watch a film last Saturday."),
+    ("hit", "hit", "hit", "ударять, попадать", "Tom {} the ball very hard in yesterday's match."),
+    ("hurt", "hurt", "hurt", "причинять боль, ушибить", "Ann fell off her bike and {} her knee."),
+    ("cost", "cost", "cost", "стоить", "Last year this book {} 300 roubles."),
+    ("shut", "shut", "shut", "закрывать", "Granny {} the window because it was cold."),
+    ("read", "read", "read", "читать (V2, V3 читаются [red])", "I {} a funny book last weekend."),
+  ]),
+  (2, "[iː] → [e]", "долгий звук [iː] становится коротким [e]", [
+    ("keep", "kept", "kept", "держать, хранить", "We {} the cake in the fridge until the party."),
+    ("sleep", "slept", "slept", "спать", "The baby {} for ten hours last night."),
+    ("feel", "felt", "felt", "чувствовать", "I {} very tired after the football match."),
+    ("meet", "met", "met", "встречать, знакомиться", "We {} our new teacher last Monday."),
+    ("feed", "fed", "fed", "кормить", "Max {} the cat this morning."),
+    ("leave", "left", "left", "уходить, уезжать, оставлять", "The bus {} at 8 o'clock this morning."),
+  ]),
+  (3, "-ought / -aught", "V2 и V3 оканчиваются на -ought или -aught", [
+    ("buy", "bought", "bought", "покупать", "Mum {} some apples at the market yesterday."),
+    ("bring", "brought", "brought", "приносить", "Lena {} her dog to the picnic last Sunday."),
+    ("think", "thought", "thought", "думать", "I {} the film was boring."),
+    ("fight", "fought", "fought", "драться, бороться", "The two cats {} in the garden last night."),
+    ("catch", "caught", "caught", "ловить", "My grandad {} a big fish last summer."),
+    ("teach", "taught", "taught", "учить, преподавать", "Mrs Brown {} us a new English song yesterday."),
+  ]),
+  (4, "-d → -t", "d на конце меняется на t", [
+    ("build", "built", "built", "строить", "My dad {} a small house for our dog last spring."),
+    ("send", "sent", "sent", "отправлять", "I {} a postcard to my granny from Sochi."),
+    ("spend", "spent", "spent", "тратить, проводить (время)", "We {} two weeks at the seaside last summer."),
+    ("lend", "lent", "lent", "давать взаймы", "Tom {} me his bike yesterday."),
+    ("learn", "learnt/learned", "learnt/learned", "учить, узнавать", "We {} a lot of new words last week."),
+  ]),
+  (5, "-ind → -ound", "", [
+    ("find", "found", "found", "находить", "I {} my lost keys under the sofa yesterday."),
+  ]),
+  (6, "-ay → -aid", "и make – made", [
+    ("say", "said", "said", "говорить, сказать", "The teacher {} “Good morning!” and smiled."),
+    ("pay", "paid", "paid", "платить", "Dad {} for our pizza last night."),
+    ("make", "made", "made", "делать, готовить", "My sister {} pancakes for breakfast this morning."),
+  ]),
+  (7, "→ u [ʌ]", "в V2 и V3 появляется u", [
+    ("win", "won", "won", "выигрывать", "Our team {} the football match last Saturday."),
+    ("hang", "hung", "hung", "вешать, висеть", "We {} a big poster on the wall yesterday."),
+  ]),
+  (8, "A – B – B", "V2 и V3 одинаковые (смешанные)", [
+    ("sell", "sold", "sold", "продавать", "Our neighbour {} his old car last month."),
+    ("tell", "told", "told", "рассказывать", "Granny {} us a funny story last night."),
+    ("stand", "stood", "stood", "стоять", "We {} in the queue for twenty minutes."),
+    ("understand", "understood", "understood", "понимать", "I {} everything at the English lesson yesterday."),
+    ("hear", "heard", "heard", "слышать", "I {} a strange noise last night."),
+    ("lose", "lost", "lost", "терять, проигрывать", "Peter {} his phone in the park yesterday."),
+    ("sit", "sat", "sat", "сидеть", "We {} on the grass and had a picnic."),
+    ("get", "got", "got", "получать", "I {} a new bike for my birthday last year."),
+    ("have", "had", "had", "иметь", "We {} a great time at the zoo yesterday."),
+    ("hold", "held", "held", "держать", "The little girl {} her mum's hand in the street."),
+  ]),
+  (9, "A – B – A", "V3 = V1", [
+    ("come", "came", "come", "приходить", "My cousins {} to visit us last weekend."),
+    ("become", "became", "become", "становиться", "Last night it {} very cold."),
+    ("run", "ran", "run", "бегать", "Jack {} to school because he was late."),
+  ]),
+  (10, "i – a – u", "", [
+    ("begin", "began", "begun", "начинать", "The lesson {} at 9 o'clock yesterday."),
+    ("drink", "drank", "drunk", "пить", "I {} a glass of milk before bed last night."),
+    ("sing", "sang", "sung", "петь", "We {} “Happy Birthday” to Mum last Friday."),
+    ("swim", "swam", "swum", "плавать", "We {} in the sea every day last summer."),
+    ("ring", "rang", "rung", "звонить", "The phone {} at 7 o'clock this morning."),
+  ]),
+  (11, "i – o – i + en", "", [
+    ("drive", "drove", "driven", "водить (машину)", "Dad {} us to the airport last Monday."),
+    ("ride", "rode", "ridden", "ездить (верхом, на велосипеде)", "I {} my bike in the park yesterday."),
+    ("write", "wrote", "written", "писать", "Anna {} a letter to her pen friend last week."),
+  ]),
+  (12, "-ew – -own", "", [
+    ("blow", "blew", "blown", "дуть", "The wind {} very hard last night."),
+    ("grow", "grew", "grown", "расти, выращивать", "Our tomatoes {} very quickly last summer."),
+    ("know", "knew", "known", "знать", "I {} the answer to the teacher's question."),
+    ("throw", "threw", "thrown", "бросать", "The boy {} the ball to his dog."),
+    ("fly", "flew", "flown", "летать", "We {} to Moscow last month."),
+    ("draw", "drew", "drawn", "рисовать", "My little brother {} a funny cat yesterday."),
+  ]),
+  (13, "o – o + en", "", [
+    ("break", "broke", "broken", "ломать, разбивать", "Oops! I {} a cup this morning."),
+    ("choose", "chose", "chosen", "выбирать", "Masha {} a red dress for the party."),
+    ("speak", "spoke", "spoken", "говорить", "We {} English all day at the summer camp."),
+    ("wake", "woke", "woken", "просыпаться, будить", "I {} up at 6 o'clock this morning."),
+    ("forget", "forgot", "forgotten", "забывать", "Sam {} his homework at home yesterday."),
+  ]),
+  (14, "-ear – -ore – -orn", "", [
+    ("wear", "wore", "worn", "носить (одежду)", "Lucy {} a beautiful dress at the party last night."),
+  ]),
+  (15, "V3 = V1 + n", "", [
+    ("take", "took", "taken", "брать", "We {} a lot of photos on holiday last summer."),
+    ("eat", "ate", "eaten", "есть", "We {} pizza for dinner yesterday."),
+    ("fall", "fell", "fallen", "падать", "Tom {} off his bike yesterday."),
+    ("give", "gave", "given", "давать", "My friends {} me a nice present for my birthday."),
+    ("see", "saw", "seen", "видеть", "I {} a funny film at the cinema last Sunday."),
+  ]),
+  (16, "Особые", "их просто запоминаем", [
+    ("be", "was/were", "been", "быть", None),
+    ("do", "did", "done", "делать", "I {} my homework after school yesterday."),
+    ("go", "went", "gone", "идти, ехать", "We {} to the cinema last Saturday."),
+  ]),
+]
